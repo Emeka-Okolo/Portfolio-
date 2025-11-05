@@ -33,3 +33,47 @@ form.addEventListener('submit', function (event) {
 
     alert('Received Emeka Says Thanks!');
 });
+
+
+
+ document.addEventListener('DOMContentLoaded', () => {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const projectItems = document.querySelectorAll('.project-item');
+
+            // Initial active state for 'All' button
+            document.querySelector('[data-filter="all"]').classList.replace('bg-gray-700', 'bg-orange-600');
+            document.querySelector('[data-filter="all"]').classList.replace('hover:bg-gray-600', 'hover:bg-orange-700');
+
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const filter = button.dataset.filter;
+
+                    // 1. Manage Active Button Styles
+                    filterButtons.forEach(btn => {
+                        // Reset all buttons to default gray
+                        btn.classList.remove('bg-orange-600', 'hover:bg-orange-700');
+                        btn.classList.add('bg-gray-700', 'hover:bg-gray-600');
+                    });
+                    
+                    // Set the clicked button to the active orange style
+                    button.classList.remove('bg-gray-700', 'hover:bg-gray-600');
+                    button.classList.add('bg-orange-600', 'hover:bg-orange-700');
+
+
+                    // 2. Filter Project Items
+                    projectItems.forEach(item => {
+                        const categories = item.dataset.category;
+
+                        // Check if the item's categories string includes the selected filter
+                        if (categories.includes(filter)) {
+                            // Show the item
+                            item.style.display = 'block'; 
+                        } else {
+                            // Hide the item
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        });
